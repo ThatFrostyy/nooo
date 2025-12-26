@@ -7,7 +7,6 @@ public class NetworkGameManager : MonoBehaviour
     [Header("Netcode")]
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private NetworkObject playerPawnPrefab;
-    [SerializeField] private bool persistAcrossScenes = true;
 
     private readonly Dictionary<ulong, PlayerConnection> connections = new();
 
@@ -15,11 +14,6 @@ public class NetworkGameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (persistAcrossScenes)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
         if (networkManager == null)
         {
             networkManager = NetworkManager.Singleton;
