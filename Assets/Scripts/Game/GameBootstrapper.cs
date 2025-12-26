@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class GameBootstrapper : MonoBehaviour
 {
+    public static GameBootstrapper Instance { get; private set; }
+
+
     [Header("Configs")]
     [SerializeField] private GameConfig gameConfig;
     [SerializeField] private WorldGenConfig worldGenConfig;
@@ -13,7 +16,18 @@ public class GameBootstrapper : MonoBehaviour
     private void Awake()
     {
         GameServices.Initialize(gameConfig, worldGenConfig);
-        DontDestroyOnLoad(gameObject);
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+            return;
+        }
+
+        DontDestroyOnLoad(this);
     }
 
     private void Start()

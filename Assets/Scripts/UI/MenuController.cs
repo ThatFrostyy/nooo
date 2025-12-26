@@ -13,10 +13,6 @@ public class MenuController : MonoBehaviour
 
     private void Awake()
     {
-        if (networkGameManager == null)
-        {
-            networkGameManager = FindFirstObjectByType<NetworkGameManager>();
-        }
 
         if (hostButton != null)
         {
@@ -31,6 +27,32 @@ public class MenuController : MonoBehaviour
         if (serverButton != null)
         {
             serverButton.onClick.AddListener(StartServer);
+        }
+    }
+
+    private void Start()
+    {
+        if (networkGameManager == null)
+        {
+            networkGameManager = FindFirstObjectByType<NetworkGameManager>();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (hostButton != null)
+        {
+            hostButton.onClick.RemoveListener(StartHost);
+        }
+
+        if (clientButton != null)
+        {
+            clientButton.onClick.RemoveListener(StartClient);
+        }
+
+        if (serverButton != null)
+        {
+            serverButton.onClick.RemoveListener(StartServer);
         }
     }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class NetworkGameManager : MonoBehaviour
 {
+    public static NetworkGameManager Instance { get; private set; }
+
     [Header("Netcode")]
     [SerializeField] private NetworkManager networkManager;
     [SerializeField] private NetworkObject playerPawnPrefab;
@@ -18,6 +20,18 @@ public class NetworkGameManager : MonoBehaviour
         {
             networkManager = NetworkManager.Singleton;
         }
+
+        if (Instance == null)
+        {
+            Instance = this; 
+        }
+        else
+        {
+            Destroy(this);
+            return;
+        }
+
+        DontDestroyOnLoad(this);
 
         if (networkManager == null)
         {
